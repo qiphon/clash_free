@@ -66,7 +66,7 @@ fs.mkdir(outputDir, err => {
         await fetch(
           `https://raw.githubusercontent.com/ZYFXS/ZYFXS001/refs/heads/main/${filename}`,
         ).then(r => {
-          r.text().then(text => {
+          return r.text().then(text => {
             fs.writeFileSync(to, text, 'utf-8')
           })
         })
