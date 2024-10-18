@@ -35,11 +35,11 @@ jobs:
       # - name: fetch file from  https://github.com/ZYFXS/ZYFXS001
       #   run: git subtree pull git@github.com:ZYFXS/ZYFXS001.git main --prefix=src/sub
 
-      - name: install chrome
-        run: bunx puppeteer browsers install
-
       - name: Install dependencies
         run: bun install
+
+      - name: install chrome
+        run: bunx puppeteer browsers install
 
       - name: 'get lasted file and move to dist'
         run: bun ./src/index.ts
