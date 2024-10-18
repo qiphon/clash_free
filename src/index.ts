@@ -2,6 +2,7 @@ import puppeteer from 'puppeteer'
 import { logErr, logInfo } from './utils'
 import path from 'path'
 import fs from 'fs'
+import { text } from 'stream/consumers'
 
 logInfo('clear dist file')
 // child_process.exec('mkdir -p dist && rm -rf dist/* ')
@@ -58,12 +59,17 @@ fs.mkdir(outputDir, err => {
       }
     }
 
-    const moveFile = (filename?: string) => {
+    const moveFile = async (filename?: string) => {
       if (filename) {
-        const source = path.resolve(__dirname, './sub/', filename)
         const to = path.resolve(__dirname, '../dist/index')
-        // child_process.execSync(`cp ${source} ${target}`)
-        fs.cpSync(source, to)
+        logInfo(`download file ${filename}`)
+        await fetch(
+          `https://raw.githubusercontent.com/ZYFXS/ZYFXS001/refs/heads/main/${filename}`,
+        ).then(r => {
+          return r.text().then(text => {
+            fs.writeFileSync(to, text, 'utf-8')
+          })
+        })
       } else {
         logErr(new Error('get filename error'), '没有找到最新的文件')
       }

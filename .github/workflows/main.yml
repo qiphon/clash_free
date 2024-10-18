@@ -31,8 +31,9 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
-      - name: fetch file from  https://github.com/ZYFXS/ZYFXS001
-        run: git subtree pull git@github.com:ZYFXS/ZYFXS001.git main --prefix=src/sub
+      # can not use in github actions
+      # - name: fetch file from  https://github.com/ZYFXS/ZYFXS001
+      #   run: git subtree pull git@github.com:ZYFXS/ZYFXS001.git main --prefix=src/sub
 
       - name: install chrome
         run: bunx puppeteer browsers install
