@@ -66,10 +66,14 @@ fs.mkdir(outputDir, err => {
         await fetch(
           `https://raw.githubusercontent.com/ZYFXS/ZYFXS001/refs/heads/main/${filename}`,
         ).then(r => {
-          return r.text().then(text => {
+          r.text().then(text => {
             fs.writeFileSync(to, text, 'utf-8')
           })
         })
+        return fs.cpSync(
+          path.resolve(__dirname, 'index.html'),
+          `${outputDir}/index.html`,
+        )
       } else {
         logErr(new Error('get filename error'), '没有找到最新的文件')
       }
