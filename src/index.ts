@@ -1,18 +1,28 @@
 import puppeteer from 'puppeteer'
-import child_process from 'child_process'
 import { logErr, logInfo } from './utils'
 import path from 'path'
+import fs from 'fs'
 
 logInfo('clear dist file')
-child_process.exec('mkdir -p dist && rm -rf dist/* ')
+// child_process.exec('mkdir -p dist && rm -rf dist/* ')
+const outputDir = path.resolve(__dirname, '../dist')
+try {
+  fs.rmSync(outputDir)
+} catch {}
 
-logInfo(' fetch file from  https://github.com/ZYFXS/ZYFXS001 ')
-child_process.execSync(
-  'git subtree pull git@github.com:ZYFXS/ZYFXS001.git main --prefix=src/sub',
-)
+fs.mkdir(outputDir, err => {
+  if (err) {
+    logErr(err, '创建文件夹失败')
+  }
+})
 
-logInfo('install chrome')
-child_process.execSync('bunx puppeteer browsers install')
+// logInfo(' fetch file from  https://github.com/ZYFXS/ZYFXS001 ')
+// child_process.execSync(
+//   'git subtree pull git@github.com:ZYFXS/ZYFXS001.git main --prefix=src/sub',
+// )
+
+// logInfo('install chrome')
+// child_process.execSync('bunx puppeteer browsers install')
 ;(async () => {
   const randomNumber = Date.now().toString().slice(-4)
   logInfo('start puppeteer')
@@ -51,8 +61,9 @@ child_process.execSync('bunx puppeteer browsers install')
     const moveFile = (filename?: string) => {
       if (filename) {
         const source = path.resolve(__dirname, './sub/', filename)
-        const target = path.resolve(__dirname, '../dist/index')
-        child_process.execSync(`cp ${source} ${target}`)
+        const to = path.resolve(__dirname, '../dist/index')
+        // child_process.execSync(`cp ${source} ${target}`)
+        fs.cpSync(source, to)
       } else {
         logErr(new Error('get filename error'), '没有找到最新的文件')
       }
