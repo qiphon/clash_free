@@ -66,10 +66,12 @@ fs.mkdir(outputDir, err => {
         await fetch(
           `https://raw.githubusercontent.com/ZYFXS/ZYFXS001/refs/heads/main/${filename}`,
         ).then(r => {
+          logInfo('fetch file success')
           return r.text().then(text => {
             fs.writeFileSync(to, text, 'utf-8')
           })
         })
+        logInfo('move index.html')
         return fs.cpSync(
           path.resolve(__dirname, 'index.html'),
           `${outputDir}/index.html`,
