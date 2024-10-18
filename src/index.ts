@@ -2,7 +2,6 @@ import puppeteer from 'puppeteer'
 import { logErr, logInfo } from './utils'
 import path from 'path'
 import fs from 'fs'
-import { text } from 'stream/consumers'
 
 logInfo('clear dist file')
 // child_process.exec('mkdir -p dist && rm -rf dist/* ')
@@ -29,13 +28,14 @@ fs.mkdir(outputDir, err => {
   logInfo('start puppeteer')
   const browser = await puppeteer
     .launch({
-      headless: false,
+      headless: true,
       args: [
         `--user-agent=Mozilla/5.0  (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/12${randomNumber[0]}.${randomNumber[1]}.${randomNumber[2]}.${randomNumber[3]} Safari/537.36`,
       ],
     })
     .catch(err => {
       logErr(err, 'launch chrome error')
+      process.exit(-1)
     })
 
   if (!browser) return
