@@ -72,7 +72,7 @@ fs.mkdir(outputDir, err => {
           })
         })
         logInfo('move index.html')
-        return fs.cpSync(
+        fs.cpSync(
           path.resolve(__dirname, 'index.html'),
           `${outputDir}/index.html`,
         )
