@@ -30,7 +30,7 @@ fs.mkdir(outputDir, err => {
     .launch({
       headless: true,
       args: [
-        `--user-agent=Mozilla/5.0  (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/12${randomNumber[0]}.${randomNumber[1]}.${randomNumber[2]}.${randomNumber[3]} Safari/537.36`,
+        `--user-agent=Mozilla/5.0  (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.00 (KHTML, like Gecko) Chrome/12${randomNumber[0]}.${randomNumber[1]}.${randomNumber[2]}.${randomNumber[3]} Safari/537.00`,
       ],
     })
     .catch(err => {
